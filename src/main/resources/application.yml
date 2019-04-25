@@ -1,0 +1,30 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9001/eureka/
+server:
+  port: 9012
+spring:
+  application:
+    name: FileService
+
+#开放所有页面节点  默认只开启了health、info两个节点
+  datasource:
+    url: jdbc:mysql://140.143.192.150:3306/file_service
+    username: root
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+multipart:
+  enabled: true
+
+ctx:
+  file-service:
+    root:
+      path: D:/downloads/files
