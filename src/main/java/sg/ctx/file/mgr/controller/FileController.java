@@ -26,10 +26,15 @@ public class FileController {
     private FileService fileService;
 
     @PostMapping("/file/upload")
-    public void upload(@RequestParam("file") MultipartFile uploadFile, HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
+    @ResponseBody
+    public JSONObject upload(@RequestParam("file") MultipartFile uploadFile, HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
         var file = this.fileService.saveFile(1, uploadFile.getOriginalFilename(), uploadFile.getInputStream(), uploadFile.getSize());
         String fileId = String.valueOf(file.getId());
         response.addHeader("fileId", fileId);
+
+        JSONObject result = new JSONObject();
+        result.put("fileId", fileId);
+        return result;
     }
 
     @GetMapping("/file/download")
