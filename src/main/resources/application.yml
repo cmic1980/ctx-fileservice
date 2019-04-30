@@ -5,15 +5,19 @@ eureka:
 server:
   port: 9012
 spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   application:
     name: FileService
-
-#开放所有页面节点  默认只开启了health、info两个节点
+  #开放所有页面节点  默认只开启了health、info两个节点
   datasource:
     url: jdbc:mysql://140.143.192.150:3306/file_service
     username: root
     password: password
     driver-class-name: com.mysql.jdbc.Driver
+
 
 management:
   endpoints:

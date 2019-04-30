@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -65,4 +66,12 @@ public class FileServiceImpl implements FileService {
         fileEntity.setContent(content);
         return fileEntity;
     }
+
+    @Override
+    public List<FileEntity> getFileList(List<Integer> fileIdList) {
+        List<FileEntity> fileEntityList = this.fileMapper.selectListByIds(fileIdList);
+        return fileEntityList;
+    }
+
+
 }

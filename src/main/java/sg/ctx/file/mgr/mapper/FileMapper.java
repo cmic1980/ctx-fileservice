@@ -1,11 +1,10 @@
 package sg.ctx.file.mgr.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import sg.ctx.file.mgr.domain.FileEntity;
+
+import java.util.List;
 
 @Mapper
 @Repository
@@ -21,4 +20,12 @@ public interface FileMapper {
             "from file_entity " +
             "where id = #{id}")
     FileEntity selectById(int id);
+
+    @Select("<script> " +
+            "select id, bucket_id as bucketId, physical_name as  physicalName, logic_name as logicName, logic_path as logicPath, " +
+            "ext, file_size as fileSize, gmt_create as gmtCreate, gmt_modified as gmtModified " +
+            "from file_entity " +
+            "where id in <foreach item='item' index='index' collection='fileIdList' open='(' separator=',' close=')'> #{item} </foreach> " +
+            "</script>")
+    List<FileEntity> selectListByIds(@Param("fileIdList")List<Integer> fileIdList);
 }
